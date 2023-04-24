@@ -12,9 +12,10 @@ class UserController {
   }
 
   getOneUser(req, res) {
-    this.userService.getOneUser(req.params.id);
-
-    res.status(200).send(this.userService.getOneUser(id));
+    this.userService
+      .getOneUser(req.params.id)
+      .then((user) => res.status(201).send(user))
+      .catch((err) => res.status(500).send(err));
   }
 
   createOneUser(req, res) {
