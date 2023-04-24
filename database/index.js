@@ -4,11 +4,11 @@ const { config } = require('dotenv');
 config()
 
 const sequelize = new Sequelize(
-  questify,
-  root,
-  undefined,
+  process.env.DB_NAME,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
   {
-  host: localhost,
+  host: process.env.DB_HOST,
   dialect: 'mysql',
 }
 )
