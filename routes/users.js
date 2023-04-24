@@ -1,9 +1,9 @@
 var express = require('express');
+const UserController = require('../modules/user/userController');
 var router = express.Router();
+const Usercontoller = new UserController()
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+     router.get('/',Usercontoller.getAllUsers.bind(Usercontoller))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 
 module.exports = router;
