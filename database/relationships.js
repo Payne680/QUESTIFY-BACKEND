@@ -16,6 +16,8 @@ function relate() {
   Task.hasMany(State);
   State.belongsTo(Task);
 
-  User.belongsToMany(Project);
-  Project.belongsToMany(User);
+  User.belongsToMany(Project, { through: "user_project" });
+  Project.belongsToMany(User, { through: "user_project" });
 }
+
+module.exports = relate
