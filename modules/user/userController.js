@@ -2,30 +2,38 @@ const UserService = require("./userService");
 
 class UserController {
   constructor() {
-    this.userService = new UserService(); 
+    this.userService = new UserService();
   }
 
   getAllUsers(req, res) {
-    this.userService.getAllUsers();
+    this.userService
+      .getAllUsers(req.body)
+      .then((user) => res.status(201).send(user))
+      .catch((err) => res.status(500).send(err));
+  }
 
-    res.status(200).send(this.userService.getAllUsers())
+  getOneUser(req, res) {
+    this.userService
+      .getOneUser(req.params.id)
+      .then((user) => res.status(201).send(user))
+      .catch((err) => res.status(500).send(err));
   }
 
   createOneUser(req, res) {
-    const { name, password, email_address } = req.body;
+    const { name, emailAddress, password } = req.body;
 
-    if (!(name && password && email_address)) {
-      return res.status(406).send({ message: 'Missing User Info' });
+    if (!(name && emailAddress && password)) {
+      return res.status(406).send({ message: "Missing User Info" });
     }
-
     this.userService
-      .registerUser(name, password, email_address)
+      .addUser(name, emailAddress, password)
       .then((user) => res.status(201).send(user))
       .catch((err) => res.status(500).send(err));
   }
 
   patchOneUser(req, res) {
-    this.userService.editOneUser(req.body, req.params.id)
+    this.userService
+      .editOneUser(req.body, req.params.id)
       .then((updatedUser) => res.status(202).send(updatedUser))
       .catch((err) => res.status(401).send(err));
   }
