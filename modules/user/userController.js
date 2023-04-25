@@ -6,9 +6,10 @@ class UserController {
   }
 
   getAllUsers(req, res) {
-    this.userService.getAllUsers();
-
-    res.status(200).send(this.userService.getAllUsers());
+    this.userService
+      .getAllUsers(req.body)
+      .then((user) => res.status(201).send(user))
+      .catch((err) => res.status(500).send(err));
   }
 
   getOneUser(req, res) {
