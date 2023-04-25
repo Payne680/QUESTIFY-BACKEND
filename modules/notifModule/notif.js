@@ -1,17 +1,13 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('.');
+const sequelize = require('../../database');
 
-const Project = sequelize.define('project', {
+const Notification = sequelize.define('notification', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   title: DataTypes.STRING,
-  ownerID: DataTypes.INTEGER,
-  startDate: DataTypes.DATE,
-  endDate: DataTypes.DATE,
-  status: DataTypes.STRING
 },
   {
     paranoid: true,
@@ -19,4 +15,4 @@ const Project = sequelize.define('project', {
   }
 )
 
-module.exports = Project
+module.exports = Notification
