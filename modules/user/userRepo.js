@@ -1,5 +1,5 @@
-const User = require("../../database/users");
-const Project = require("../../database/project");
+const Project = require("../projectModule/project");
+const User = require("./users");
 class UserRepository {
   getAllUser() {
     return User.findAll({include: Project});
