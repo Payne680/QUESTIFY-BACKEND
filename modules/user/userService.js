@@ -1,4 +1,4 @@
-const User = require("../../database/users");
+const User = require("./users");
 
 class UserRepository {
   getAllUser() {

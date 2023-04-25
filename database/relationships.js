@@ -2,17 +2,20 @@ const sequelize = require(".");
 const Notification = require("../modules/notifModule/notif");
 const Project = require("../modules/projectModule/project");
 const State = require("../modules/stateModule/state");
+const User = require("../modules/user/users");
 const Task = require("./task");
-const User = require("./users");
 function relate() {
-  sequelize.sync;
+  sequelize.sync();
   User.hasMany(Task);
   Task.belongsTo(User);
   Task.hasMany(Notification);
   Notification.belongsTo(Task);
+  User.hasMany(Task);
+  Task.belongsTo(User);
   Task.hasMany(State);
   State.belongsTo(Task);
   User.belongsToMany(Project, { through: "user_project" });
   Project.belongsToMany(User, { through: "user_project" });
+  sequelize.sync();
 }
 module.exports = relate;
