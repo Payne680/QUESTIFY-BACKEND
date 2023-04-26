@@ -13,6 +13,7 @@ relate();
 
 const usersRouter = require('./routes/users');
 const notificationRouter = require('./routes/notifications');
+const statesRouter = require('./routes/state');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/notifications', notificationRouter);
+app.use('/states', statesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

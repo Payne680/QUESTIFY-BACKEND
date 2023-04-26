@@ -46,7 +46,7 @@ class notifyService {
   }
 
   /* 
-    ma bro Kadji, i'm sure you are to write the login function here as well,
+    ma bro , i'm sure you are to write the login function here as well,
     remember that getUserByEmail(emai_address) is 
     allready in the notifyRepository class
   */
