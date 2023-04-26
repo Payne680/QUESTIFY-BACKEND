@@ -48,11 +48,7 @@ class StateService {
     }
   }
 
-  /* 
-    ma bro Kadji, i'm sure you are to write the login function here as well,
-    remember that getStateByEmail(emai_address) is 
-    allready in the StateRepository class
-  */
+
 }
 
 module.exports = StateService;

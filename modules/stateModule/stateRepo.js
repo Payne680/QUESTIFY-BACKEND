@@ -1,4 +1,4 @@
-const Task = require("../../database/task");
+const Task = require("../taskModule/task");
 const State = require("./state");
 
 

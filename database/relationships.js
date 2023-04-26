@@ -3,7 +3,7 @@ const Notification = require("../modules/notifModule/notif");
 const Project = require("../modules/projectModule/project");
 const State = require("../modules/stateModule/state");
 const User = require("../modules/user/users");
-const Task = require("./task");
+const Task = require("../modules/taskModule/task");
 function relate() {
 
   sequelize.sync();
