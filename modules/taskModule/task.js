@@ -8,7 +8,9 @@ const Task = sequelize.define('task', {
     autoIncrement: true
   },
   title: DataTypes.STRING,
+  assignee: DataTypes.STRING,
   project_ID: DataTypes.INTEGER,
+  priority: DataTypes.ENUM('Urgent', 'High', 'Normal', 'Low', 'Clear'),
   startDate: DataTypes.DATE,
   endDate: DataTypes.DATE,
   status: DataTypes.STRING
