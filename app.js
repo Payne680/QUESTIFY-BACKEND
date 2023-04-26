@@ -12,6 +12,7 @@ const relate = require('./database/relationships');
 relate();
 
 const usersRouter = require('./routes/users');
+const notificationRouter = require('./routes/notifications');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
+app.use('/notifications', notificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

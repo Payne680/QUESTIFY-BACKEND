@@ -1,8 +1,8 @@
-
 const Notification = require("./notif");
 
+
 class notifyRepository {
-  getAllNotifications() {
+  getAllNotification() {
     return Notification.findAll();
   }
 
@@ -10,7 +10,7 @@ class notifyRepository {
     return Notification.findByPk(id);
   }
 
-  createNotification() {
+  createNotification(notify) {
     return Notification.create(notify);
   }
 
