@@ -1,4 +1,4 @@
-const User = require("../../database/users");
+const User = require("../../modules/user/users");
 
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");

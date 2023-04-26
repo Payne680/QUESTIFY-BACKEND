@@ -2,8 +2,8 @@ const sequelize = require(".");
 const Notification = require("../modules/notifModule/notif");
 const Project = require("../modules/projectModule/project");
 const State = require("../modules/stateModule/state");
+const Task = require("../modules/taskModule/task");
 const User = require("../modules/user/users");
-const Task = require("./task");
 function relate() {
   sequelize.sync();
   User.hasMany(Task);
@@ -17,7 +17,7 @@ function relate() {
 
   User.belongsToMany(Project, { through: "user_project" });
   Project.belongsToMany(User, { through: "user_project" });
-  
+
   sequelize.sync();
 }
 module.exports = relate;
