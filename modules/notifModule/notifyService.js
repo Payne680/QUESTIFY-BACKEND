@@ -1,10 +1,8 @@
-const bcrypt = require("bcrypt");
-const uuid = require("uuid");
-const UserRepository = require("./userRepo");
+const notifyRepository = require("./notifyRepo");
 
 class notifyService {
   constructor() {
-    this.notifyRepo = new notifyRepository(); 
+    this.notifyRepo = new notifyRepository();
   }
   async getAllNotifications() {
     const allNotifications = await this.notifyRepo.getAllNotification();
@@ -19,12 +17,10 @@ class notifyService {
   async addNotification(title) {
     try {
       const newNotification = await this.notifyRepo.createNotification({
-        title
-      })
+        title,
+      });
       return newNotification;
-      
-    }
-    catch(err) {
+    } catch (err) {
       throw new Error("COULD_NOT_REGISTER_Notification");
     }
   }
@@ -50,7 +46,7 @@ class notifyService {
   }
 
   /* 
-    ma bro Kadji, i'm sure you are to write the login function here as well,
+    ma bro , i'm sure you are to write the login function here as well,
     remember that getUserByEmail(emai_address) is 
     allready in the notifyRepository class
   */
