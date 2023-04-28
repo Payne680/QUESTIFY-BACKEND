@@ -1,9 +1,13 @@
-var express = require('express');
-const UserController = require('../modules/user/userController');
+var express = require("express");
+const UserController = require("../modules/user/userController");
 var router = express.Router();
-const Usercontoller = new UserController()
+
+const userController = new UserController();
 
 /* GET users listing. */
-     router.get('/',Usercontoller.getAllUsers.bind(Usercontoller))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-
+router.get("/", userController.getAllUsers.bind(userController));
+router.get("/:id", userController.getOneUser.bind(userController));
+router.post("/", userController.createOneUser.bind(userController));
+router.put("/:id", userController.patchOneUser.bind(userController));
+router.delete("/:id", userController.deleteOneUser.bind(userController));
 module.exports = router;

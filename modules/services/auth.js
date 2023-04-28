@@ -1,5 +1,5 @@
 const app = require('../../app');
-const User = require('../../database/users');
+const User = require('../user/users');
 const { verifyToken } = require('./jwt');
 
 const authMiddleware = async (req, res, next) => {

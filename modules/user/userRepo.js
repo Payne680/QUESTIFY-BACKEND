@@ -1,59 +1,25 @@
-const UserRepository = require("./user.repo");
-
-const bcrypt = require("bcrypt");
-const uuid = require("uuid");
-
-class UserService {
-  constructor() {
-    this.userRepo = new UserRepository(); 
-  }
-  async getAllUsers() {
-    const allUsers = await this.userRepo.getAllUser();
-    return allUsers;
+const Project = require("../projectModule/project");
+const User = require("./users");
+class UserRepository {
+  getAllUser() {
+    return User.findAll({include: Project});
   }
 
-  async registerUser(name, password, email_address) {
-    try {
-      const hash = await bcrypt.hash(password, +process.env.SALT_ROUNDS)
-
-      const newUser = await this.userRepo.createUser({
-        name,
-        email_address,
-        password: hash,
-      })
-
-      return newUser;
-    }
-    catch(err) {
-      throw new Error("COULD_NOT_REGISTER_USER");
-    }
+  getUserById(id) {
+    return User.findByPk(id, {include: Project});
   }
 
-  async editOneUser(userToEdit, id) {
-    const user = await this.userRepo.getUserById(id);
-
-    if (!user) throw new Error("USER_DOES_NOT_EXIST");
-
-    await this.userRepo.editUser(userToEdit, id);
-
-    const updatedUser = await this.userRepo.getUserById(id);
-
-    return updatedUser;
+  createUser(user) {
+    return User.create(user);
   }
 
-  async deleteOneUser(id) {
-    try {
-      await this.userRepo.dropUser(id);
-    } catch {
-      throw new Error("COULD_NOT_DELETE_USER");
-    }
+  editUser(user, id) {
+    return User.update(user, { where: { id } });
   }
 
-  /* 
-    ma bro Kadji, i'm sure you are to write the login function here as well,
-    remember that getUserByEmail(emai_address) is 
-    allready in the UserRepository class
-  */
+  dropUser(id) {
+    return User.destroy({ where: { id } });
+  }
 }
 
-module.exports = UserService;
+module.exports = UserRepository;
