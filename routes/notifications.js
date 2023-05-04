@@ -4,7 +4,7 @@ var router = express.Router();
 
 const notificationController = new notifyController();
 
-/* GET users listing. */
+/* GET notification listing. */
 router.get("/", notificationController.getAllNotify.bind(notificationController));
 router.get("/:id", notificationController.getOneNotify.bind(notificationController));
 router.post("/", notificationController.addNotify.bind(notificationController));

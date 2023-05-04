@@ -4,7 +4,7 @@ var router = express.Router();
 
 const projectController = new ProjectController();
 
-/* GET PROJECT listing. */
+/* GET project listing. */
 router.get("/", projectController.getAllProjects.bind(projectController));
 router.get("/:id", projectController.getOneProject.bind(projectController));
 router.post("/", projectController.createOneProject.bind(projectController));

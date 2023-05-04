@@ -7,7 +7,10 @@ const Notification = sequelize.define('notification', {
     autoIncrement: true,
     primaryKey: true,
   },
-  title: DataTypes.STRING,
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+  }
 },
   {
     paranoid: true,

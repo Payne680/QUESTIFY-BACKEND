@@ -1,5 +1,5 @@
 const Notification = require("./notif");
-
+let invite;
 
 class notifyRepository {
   getAllNotification() {
@@ -11,7 +11,11 @@ class notifyRepository {
   }
 
   createNotification(notify) {
-    return Notification.create(notify);
+    console.log(1, notify);
+    notify.forEach((element) => {
+      invite = Notification.create(element);
+    });
+    return invite;
   }
 
   editNotification(notify, id) {

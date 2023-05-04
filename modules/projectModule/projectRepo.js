@@ -7,7 +7,7 @@ class ProjectRepository {
   }
 
   getProjectById(id) {
-    return Project.findByPk(id, );
+    return Project.findByPk(id);
   }
 
   createProject(project) {

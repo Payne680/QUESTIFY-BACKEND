@@ -14,13 +14,13 @@ class notifyService {
     return oneNotification;
   }
 
-  async addNotification(title) {
+  async addNotification(email) {
+    console.log(2, email);
     try {
-      const newNotification = await this.notifyRepo.createNotification({
-        title,
-      });
+      const newNotification = await this.notifyRepo.createNotification(email);
       return newNotification;
     } catch (err) {
+      console.log(3, err);
       throw new Error("COULD_NOT_REGISTER_Notification");
     }
   }
