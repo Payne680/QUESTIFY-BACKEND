@@ -6,7 +6,7 @@ function signToken(data) {
       data,
     },
     process.env.JWT_PRIVATE_KEY,
-    { expiresIn: 60 * 60 * 24}
+    { expiresIn: '48h'}
   )
 }
 

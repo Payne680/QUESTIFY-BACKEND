@@ -1,4 +1,6 @@
 const Notification = require("./notif");
+const jwt = require("jsonwebtoken");
+const { signToken } = require("../services/jwt");
 let invite;
 
 class notifyRepository {
@@ -10,10 +12,14 @@ class notifyRepository {
     return Notification.findByPk(id);
   }
 
-  createNotification(notify) {
-    console.log(1, notify);
-    notify.forEach((element) => {
-      invite = Notification.create(element);
+  createNotification(emailArr) {
+    emailArr.forEach(async ({ email }) => {
+      try {
+        const inviteToken = await signToken(email);
+        invite = await Notification.create({ email, inviteToken });
+      } catch (err) {
+        throw new Error('Internal server Error')
+      }
     });
     return invite;
   }

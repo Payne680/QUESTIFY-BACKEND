@@ -1,4 +1,5 @@
 const notifyRepository = require("./notifyRepo");
+const jwt = require("jsonwebtoken")
 
 class notifyService {
   constructor() {
@@ -15,13 +16,12 @@ class notifyService {
   }
 
   async addNotification(email) {
-    console.log(2, email);
     try {
       const newNotification = await this.notifyRepo.createNotification(email);
       return newNotification;
     } catch (err) {
       console.log(3, err);
-      throw new Error("COULD_NOT_REGISTER_Notification");
+      throw new Error("COULD_NOT_REGISTER_NOTIFICATION");
     }
   }
 
