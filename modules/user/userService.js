@@ -3,6 +3,7 @@ const User = require("../../modules/user/users");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const UserRepository = require("./userRepo");
+const { signToken } = require("../services/jwt");
 
 class UserService {
   constructor() {
@@ -13,12 +14,39 @@ class UserService {
     return allUsers;
   }
 
+  async login(emailAddress, password) {
+    console.log(3, emailAddress, password);
+
+    try {
+      console.log(4, emailAddress, password);
+
+      const user = await this.userRepo.getUserByEmail(emailAddress);
+      const loginInfo = user && (await bcrypt.compare(password, user.password));
+      if (loginInfo) {
+        console.log(5, emailAddress, password);
+        console.log(user)
+
+        const token = signToken({ emailAddress: user.emailAddress });
+        console.log(token)
+        return token;
+      }
+      if (!loginInfo) {
+        console.log(6, emailAddress, password);
+
+        return "Email or Password incorrect";
+      }
+    } catch (err) {
+      throw new Error("COULD_NOT_LOGIN_USER");
+    }
+  }
+
+
   async getOneUser(id) {
     const oneUsers = await this.userRepo.getUserById(id);
     return oneUsers;
   }
 
-  async addUser(name, password, emailAddress) {
+  async addUser(name, emailAddress, password ) {
     try {
       const hash = await bcrypt.hash(password, +process.env.SALT_ROUNDS)
 

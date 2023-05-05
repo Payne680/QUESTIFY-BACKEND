@@ -5,6 +5,10 @@ class UserRepository {
     return User.findAll({include: Project});
   }
 
+  getUserByEmail(emailAddress) {
+    return User.findOne({where: { emailAddress: emailAddress}})
+  }
+
   getUserById(id) {
     return User.findByPk(id, {include: Project});
   }

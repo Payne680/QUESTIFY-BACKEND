@@ -19,6 +19,21 @@ class UserController {
       .catch((err) => res.status(500).send(err));
   }
 
+  login(req, res) {
+    const { emailAddress, password } = req.body;
+    console.log(1, emailAddress, password);
+    if (!(emailAddress && password)) {
+      return res.status(406).send({ message: "Missing User Info" });
+    }
+    console.log(2, emailAddress, password);
+
+    this.userService
+      .login(emailAddress, password)
+      .then((user) => res.status(201).send(user))
+      .catch((err) => res.status(500).send(`error is ${err}`));
+  }
+
+
   createOneUser(req, res) {
     const { name, emailAddress, password } = req.body;
 
@@ -45,19 +60,5 @@ class UserController {
       .catch((err) => res.status(500).send(err));
   }
 }
-
-// const patchOneUser = async (req, res) => {
-//   const user = await User.findOne({ where: { id: +req.params.id } });
-
-//   if (!user) return res.status(401).send("{ user does not exist }");
-
-//   await User.update(req.body, { where: { id: +req.params.id } });
-
-//   const updatedUser = await User.findOne({ where: { id: req.params.id } });
-
-//   res.status(202).send(updatedUser);
-// };
-
-/* console.log('this userController in controller', UserController, new UserController()) */
 
 module.exports = UserController;
