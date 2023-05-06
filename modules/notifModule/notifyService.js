@@ -14,6 +14,11 @@ class NotifyService {
     return oneNotification;
   }
 
+  async getAllNotificationsDetail({ data }) {
+    return this.notifyRepo.getAllNotificationsDetail({ data })
+  }
+
+
   async addNotification(emails, projectId) {
     return this.notifyRepo.createNotification(emails, projectId);
   }

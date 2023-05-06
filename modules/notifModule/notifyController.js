@@ -1,4 +1,6 @@
 
+const Project = require("../projectModule/project");
+const User = require("../user/users");
 const NotifyService = require("./notifyService");
 
 class notifyController {
@@ -18,6 +20,20 @@ class notifyController {
       .catch((err) => res.status(500).send(err));
   }
 
+  async getNotificationDetails(req, res) {
+    const { data } = await jwt.verify(req.params.token);
+    this.NotifyService.getAllNotificationsDetail({ data })
+    .then((details) => res.status(201).send(details))
+    .catch((err) => res.status(500).send(err)); en
+    // try {
+    //   const { data } = await jwt.verify(req.params.token);
+    //   const user = await User.findOne({ where: { emailAddress: data.email } })
+    //   const project = await Project.findByPk(data.projectId)
+    //   res.send({ user, project })
+    // } catch (e) {
+    //   res.send('error');
+    // }
+  };
 
   addNotify(req, res) {
     const email = req.body;
@@ -25,11 +41,11 @@ class notifyController {
     if (email.length === 0) {
       return res.status(406).send({ message: "Missing notify Info" });
     }
-  
+
     this.NotifyService.addNotification(email)
       .then((notify) => res.status(201).send(notify))
       .catch((err) => res.status(500).send(err));
-      console.log(notify)
+    console.log(notify)
   }
 
   patchOneNotification(req, res) {

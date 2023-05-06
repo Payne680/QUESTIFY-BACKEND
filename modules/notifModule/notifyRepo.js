@@ -1,5 +1,7 @@
 const Notification = require("./notif");
 const { signToken } = require("../services/jwt");
+const User = require("../user/users");
+const Project = require("../projectModule/project");
 
 class notifyRepository {
   getAllNotification() {
@@ -10,10 +12,16 @@ class notifyRepository {
     return Notification.findByPk(id);
   }
 
+  async getAllNotificationsDetail({ data }) {
+    const user = await User.findOne({ where: { emailAddress: data.email } })
+    const project = await Project.findByPk(data.projectId)
+    return ({ user, project })
+  }
+
   async createNotification(emailArr, projectId) {
-    return await Notification.bulkCreate(emailArr.map(({email}) => {
+    return await Notification.bulkCreate(emailArr.map(({ email }) => {
       const inviteToken = signToken({ email, projectId });
-      return {email, inviteToken};
+      return { email, inviteToken };
     }));
   }
 
