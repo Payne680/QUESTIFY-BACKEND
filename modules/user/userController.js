@@ -21,18 +21,15 @@ class UserController {
 
   login(req, res) {
     const { emailAddress, password } = req.body;
-    console.log(1, emailAddress, password);
     if (!(emailAddress && password)) {
       return res.status(406).send({ message: "Missing User Info" });
     }
-    console.log(2, emailAddress, password);
 
     this.userService
       .login(emailAddress, password)
       .then((user) => res.status(201).send(user))
       .catch((err) => res.status(500).send(`error is ${err}`));
   }
-
 
   createOneUser(req, res) {
     const { name, emailAddress, password } = req.body;
@@ -44,6 +41,10 @@ class UserController {
       .addUser(name, emailAddress, password)
       .then((user) => res.status(201).send(user))
       .catch((err) => res.status(500).send(err));
+  }
+
+  getCurrentUser(req, res) {
+    return res.send(req.user);
   }
 
   patchOneUser(req, res) {

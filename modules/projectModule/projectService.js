@@ -15,17 +15,9 @@ class ProjectService {
   }
 
   async addProject(title) {
-    try {
-
-      const newProject = await this.projectRepo.createProject({
-        title
-      })
-      return newProject;
-      
-    }
-    catch(err) {
-      throw new Error("COULD_NOT_REGISTER_Project");
-    }
+    return this.projectRepo.createProject({
+      title
+    });
   }
 
   async editOneProject(projectToEdit, id) {

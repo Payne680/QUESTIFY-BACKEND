@@ -1,8 +1,9 @@
-const notifyService = require("./notifyService");
+
+const NotifyService = require("./notifyService");
 
 class notifyController {
   constructor() {
-    this.NotifyService = new notifyService();
+    this.NotifyService = new NotifyService();
   }
 
   getAllNotify(req, res) {
@@ -17,15 +18,18 @@ class notifyController {
       .catch((err) => res.status(500).send(err));
   }
 
+
   addNotify(req, res) {
     const email = req.body;
 
     if (email.length === 0) {
       return res.status(406).send({ message: "Missing notify Info" });
     }
+  
     this.NotifyService.addNotification(email)
       .then((notify) => res.status(201).send(notify))
       .catch((err) => res.status(500).send(err));
+      console.log(notify)
   }
 
   patchOneNotification(req, res) {

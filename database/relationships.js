@@ -11,9 +11,8 @@ function relate() {
   User.hasMany(Task);
   Task.belongsTo(User);
 
-
-  Task.hasMany(Notification);
-  Notification.belongsTo(Task);
+  Project.hasMany(Notification);
+  Notification.belongsTo(Project);
 
   Task.hasMany(State);
   State.belongsTo(Task);

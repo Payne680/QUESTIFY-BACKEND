@@ -7,11 +7,7 @@ const Project = sequelize.define('project', {
     autoIncrement: true,
     primaryKey: true,
   },
-  title: DataTypes.STRING,
-  ownerID: DataTypes.INTEGER,
-  startDate: DataTypes.DATE,
-  endDate: DataTypes.DATE,
-  status: DataTypes.STRING
+  title: DataTypes.STRING
 },
   {
     paranoid: true,
