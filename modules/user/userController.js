@@ -19,6 +19,10 @@ class UserController {
       .catch((err) => res.status(500).send(err));
   }
 
+  getCurrentUser(req, res) {
+    res.send(req.user);
+  }
+
   login(req, res) {
     const { emailAddress, password } = req.body;
     if (!(emailAddress && password)) {
