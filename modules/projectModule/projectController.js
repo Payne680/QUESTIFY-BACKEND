@@ -1,8 +1,11 @@
+const NotifyService = require("../notifModule/notifyService");
+const sendEmail = require("../services/emailService/sendEmail");
 const ProjectService = require("./projectService");
 
 class ProjectController {
   constructor() {
     this.projectService = new ProjectService();
+    this.notifyService = new NotifyService()
   }
 
   getAllProjects(req, res) {
@@ -19,16 +22,27 @@ class ProjectController {
       .catch((err) => res.status(500).send(err));
   }
 
-  createOneProject(req, res) {
-    const { title } = req.body;
+  async createOneProject(req, res) {
+    const { project: title, members } = req.body;
 
-    if (!(title )) {
+    if (!title) {
       return res.status(406).send({ message: "Missing Project Info" });
     }
-    this.projectService
-      .addProject(title)
-      .then((project) => res.status(201).send(project))
-      .catch((err) => res.status(500).send(err));
+    try {
+      const project = await this.projectService
+        .addProject(title);
+      const notifications = await this.notifyService.addNotification(members, project.id);
+      project.addNotifications(notifications);
+      project.save();
+      notifications.map( async (element) => {
+        const url = `${process.env.BASE_URL}/confirmation/${element.inviteToken}`;
+        await sendEmail(element.email, "Verify Token", url)
+      })
+      res.status(201).send(project);
+    } catch (e) {
+      console.error(e);
+      res.status(500).send(e)
+    }
   }
 
   patchOneProject(req, res) {

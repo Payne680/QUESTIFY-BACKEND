@@ -15,31 +15,20 @@ class UserService {
   }
 
   async login(emailAddress, password) {
-    console.log(3, emailAddress, password);
-
     try {
-      console.log(4, emailAddress, password);
-
       const user = await this.userRepo.getUserByEmail(emailAddress);
       const loginInfo = user && (await bcrypt.compare(password, user.password));
       if (loginInfo) {
-        console.log(5, emailAddress, password);
-        console.log(user)
-
         const token = signToken({ emailAddress: user.emailAddress });
-        console.log(token)
         return token;
       }
       if (!loginInfo) {
-        console.log(6, emailAddress, password);
-
         return "Email or Password incorrect";
       }
     } catch (err) {
       throw new Error("COULD_NOT_LOGIN_USER");
     }
   }
-
 
   async getOneUser(id) {
     const oneUsers = await this.userRepo.getUserById(id);
@@ -49,14 +38,14 @@ class UserService {
   async addUser(name, emailAddress, password ) {
     try {
       const hash = await bcrypt.hash(password, +process.env.SALT_ROUNDS)
-
-      const newUser = await this.userRepo.createUser({
+      const user = await this.userRepo.createUser({
         name,
         emailAddress,
         password: hash
       })
-      return newUser;
       
+      const token = signToken({ emailAddress: user.emailAddress });
+      return {token, user}   
     }
     catch(err) {
       throw new Error("COULD_NOT_REGISTER_USER");

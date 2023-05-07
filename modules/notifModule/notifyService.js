@@ -1,7 +1,6 @@
 const notifyRepository = require("./notifyRepo");
-const jwt = require("jsonwebtoken")
 
-class notifyService {
+class NotifyService {
   constructor() {
     this.notifyRepo = new notifyRepository();
   }
@@ -15,14 +14,13 @@ class notifyService {
     return oneNotification;
   }
 
-  async addNotification(email) {
-    try {
-      const newNotification = await this.notifyRepo.createNotification(email);
-      return newNotification;
-    } catch (err) {
-      console.log(3, err);
-      throw new Error("COULD_NOT_REGISTER_NOTIFICATION");
-    }
+  async getAllNotificationsDetail({ data }) {
+    return this.notifyRepo.getAllNotificationsDetail({ data })
+  }
+
+
+  async addNotification(emails, projectId) {
+    return this.notifyRepo.createNotification(emails, projectId);
   }
 
   async editOneNotification(NotificationToEdit, id) {
@@ -52,4 +50,4 @@ class notifyService {
   */
 }
 
-module.exports = notifyService;
+module.exports = NotifyService;

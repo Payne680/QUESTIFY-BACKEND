@@ -21,6 +21,8 @@ class ProjectRepository {
   dropProject(id) {
     return Project.destroy({ where: { id } });
   }
+
+  
 }
 
 module.exports = ProjectRepository;

@@ -11,7 +11,7 @@ router.get("/:id", notificationController.getOneNotify.bind(notificationControll
 router.post("/", notificationController.addNotify.bind(notificationController));
 router.put("/:id", notificationController.patchOneNotification.bind(notificationController));
 router.delete("/:id", notificationController.deleteOneNotification.bind(notificationController));
-
+router.get("confirm/:token", notificationController.getNotificationDetails.bind(notificationController))
 
 
 module.exports = router;
