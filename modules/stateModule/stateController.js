@@ -1,8 +1,10 @@
 const StateService = require("./stateService");
+const TaskService = require("../taskModule/taskService");
 
 class StateController {
   constructor() {
     this.stateService = new StateService();
+    this.taskService = new TaskService();
   }
 
   getAllStates(req, res) {
@@ -22,13 +24,42 @@ class StateController {
   createOneState(req, res) {
     const { name } = req.body;
 
-    if (!(name )) {
+    if (!name) {
       return res.status(406).send({ message: "Missing State Info" });
     }
     this.stateService
       .addState(name)
       .then((State) => res.status(201).send(State))
       .catch((err) => res.status(500).send(err));
+  }
+
+  async createOneState(req, res) {
+    const  board  = req.body;
+    console.log(board);
+
+    board.map(async (el) => {
+      if (!el.title) {
+        return res.status(406).send({ message: "Missing Project Info" });
+      }
+      try {
+        const columns = await this.stateService.addState(el.title);
+      
+        const task = await this.taskService.addTask(el.cards, columns.id);
+        console.log(el.cards,2)
+        columns.addTask(task);
+        columns.save();
+        /*       task.map(async (element) => {
+          const url = `${process.env.BASE_URL}/confirmation/${element.inviteToken}`;
+          await sendEmail(element.email, "Verify Token", url);
+        }); */
+        res.status(201).send(columns);
+      } catch (e) {
+        console.error(e);
+        res.status(500).send(e);
+      }
+    })
+
+    
   }
 
   patchOneState(req, res) {

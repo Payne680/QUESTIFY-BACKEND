@@ -1,18 +1,25 @@
 const Task = require("./task");
 
-
 class TaskRepository {
   getAllTask() {
     return Task.findAll();
   }
 
   getTaskById(id) {
-    return Task.findByPk(id, );
+    return Task.findByPk(id);
   }
 
-  createTask(task) {
-    return Task.create(task);
+  async createTask(state, stateid) {
+    return await Task.bulkCreate(
+      state.map(({ email }) => {
+        return { email, stateid };
+      })
+    );
   }
+
+  /*  createTask(task) {
+    return Task.create(task);
+  } */
 
   editTask(task, id) {
     return Task.update(task, { where: { id } });
