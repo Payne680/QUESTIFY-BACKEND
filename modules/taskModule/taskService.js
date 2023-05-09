@@ -15,8 +15,8 @@ class TaskService {
   }
 
   async addTask(cards, stateid) {
-    console.log(2, cards, stateid);
-    return this.TaskRepo.createTask( cards, stateid );
+/*     console.log(2, cards, stateid); */
+    return this.TaskRepo.createTask(cards, stateid);
   }
 
   async editOneTask(TaskToEdit, id) {

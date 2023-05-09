@@ -21,7 +21,7 @@ class StateController {
       .catch((err) => res.status(500).send(err));
   }
 
-  createOneState(req, res) {
+/*   createOneState(req, res) {
     const { name } = req.body;
 
     if (!name) {
@@ -31,7 +31,7 @@ class StateController {
       .addState(name)
       .then((State) => res.status(201).send(State))
       .catch((err) => res.status(500).send(err));
-  }
+  } */
 
   async createOneState(req, res) {
     const  board  = req.body;

@@ -3,7 +3,7 @@ const State = require("./state");
 
 class StateRepository {
   getAllState() {
-    return State.findAll({ include: Task });
+    return State.findAll(/* { include: Task } */);
   }
 
   getStateById(id) {

@@ -11,8 +11,8 @@ class TaskRepository {
 
   async createTask(state, stateid) {
     return await Task.bulkCreate(
-      state.map(({ email }) => {
-        return { email, stateid };
+      state.map((email) => {
+        return { title: email.title, stateid: stateid };
       })
     );
   }
