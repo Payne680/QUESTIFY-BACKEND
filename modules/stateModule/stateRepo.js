@@ -3,7 +3,9 @@ const State = require("./state");
 
 class StateRepository {
   getAllState() {
-    return State.findAll(/* { include: Task } */);
+    return State.findAll({
+      include: [{ model: Task, attributes: ["title", "id"] }],
+    });
   }
 
   getStateById(id) {
@@ -11,10 +13,9 @@ class StateRepository {
   }
 
   createState(state) {
-    console.log(3,state)
+    console.log(3, state);
     return State.create(state);
   }
-
 
   editState(state, id) {
     return State.update(state, { where: { id } });

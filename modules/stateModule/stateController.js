@@ -10,8 +10,21 @@ class StateController {
   getAllStates(req, res) {
     this.stateService
       .getAllStates(req.body)
-      .then((State) => res.status(201).send(State))
-      .catch((err) => res.status(500).send(err));
+      .then((states) => {
+        /*    console.log(states[0].toJSON());
+          console.log(states.toJSON()); */
+        res.status(201).send(
+          states.map((state) => {
+            const rebase = state.toJSON();
+            return { ...rebase, db_id: rebase.id };
+          })
+        );
+        /*  res.status(201).send(states); */
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+      });
   }
 
   getOneState(req, res) {
@@ -21,45 +34,44 @@ class StateController {
       .catch((err) => res.status(500).send(err));
   }
 
-/*   createOneState(req, res) {
-    const { name } = req.body;
-
-    if (!name) {
+  /*   createOneState(req, res) {
+    const title = req.body;
+    console.log(title,50);
+    if (!title) {
       return res.status(406).send({ message: "Missing State Info" });
     }
     this.stateService
-      .addState(name)
+      .addState(title)
       .then((State) => res.status(201).send(State))
       .catch((err) => res.status(500).send(err));
   } */
 
   async createOneState(req, res) {
-    const  board  = req.body;
-    console.log(board);
+    const el = req.body;
+    console.log(el);
 
-    board.map(async (el) => {
-      if (!el.title) {
-        return res.status(406).send({ message: "Missing Project Info" });
-      }
-      try {
-        const columns = await this.stateService.addState(el.title);
-      
-        const task = await this.taskService.addTask(el.cards, columns.id);
-        console.log(el.cards,2)
-        columns.addTask(task);
+    /*  board.map(async (el) => { */
+    if (!el.title) {
+      return res.status(406).send({ message: "Missing Project Info" });
+    }
+
+    try {
+      let columns = { ...el, id: el.db_id };
+      if (el.db_id === null) {
+        columns = await this.stateService.addState(el.title);
+        console.log(el.title);
         columns.save();
-        /*       task.map(async (element) => {
-          const url = `${process.env.BASE_URL}/confirmation/${element.inviteToken}`;
-          await sendEmail(element.email, "Verify Token", url);
-        }); */
-        res.status(201).send(columns);
-      } catch (e) {
-        console.error(e);
-        res.status(500).send(e);
+        columns = columns.toJSON();
       }
-    })
 
-    
+      const task = await this.taskService.addTask(el.cards, columns.id);
+
+      res.status(201).send({ ...columns, cards: task });
+    } catch (e) {
+      console.error(e);
+      res.status(500).send(e);
+    }
+    /*     }); */
   }
 
   patchOneState(req, res) {

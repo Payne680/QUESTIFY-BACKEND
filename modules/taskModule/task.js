@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../../database");
 
 const Task = sequelize.define(
-  "task",
+  "card",
   {
     id: {
       type: DataTypes.INTEGER,
