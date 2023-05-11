@@ -2,7 +2,7 @@ const TaskRepository = require("./taskRepo");
 
 class TaskService {
   constructor() {
-    this.TaskRepo = new TaskRepository(); 
+    this.TaskRepo = new TaskRepository();
   }
   async getAllTasks() {
     const allTasks = await this.TaskRepo.getAllTask();
@@ -14,18 +14,9 @@ class TaskService {
     return oneTasks;
   }
 
-  async addTask(title) {
-    try {
-
-      const newTask = await this.TaskRepo.createTask({
-        title
-      })
-      return newTask;
-      
-    }
-    catch(err) {
-      throw new Error("COULD_NOT_REGISTER_Task");
-    }
+  async addTask(cards, stateid) {
+/*     console.log(2, cards, stateid); */
+    return this.TaskRepo.createTask(cards, stateid);
   }
 
   async editOneTask(TaskToEdit, id) {
@@ -47,7 +38,6 @@ class TaskService {
       throw new Error("COULD_NOT_DELETE_Task");
     }
   }
-
 }
 
 module.exports = TaskService;

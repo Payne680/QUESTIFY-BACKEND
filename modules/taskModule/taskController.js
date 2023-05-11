@@ -19,14 +19,16 @@ class TaskController {
       .catch((err) => res.status(500).send(err));
   }
 
-  createOneTask(req, res) {
-    const { title } = req.body;
 
-    if (!(title )) {
+
+  createOneTask(req, res) {
+    const task = req.body;
+
+    if (task===0) {
       return res.status(406).send({ message: "Missing Task Info" });
     }
     this.TaskService
-      .addTask(title)
+      .addTask(task)
       .then((Task) => res.status(201).send(Task))
       .catch((err) => res.status(500).send(err));
   }

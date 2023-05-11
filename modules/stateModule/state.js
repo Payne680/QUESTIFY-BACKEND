@@ -7,7 +7,7 @@ const State = sequelize.define('state', {
     autoIncrement: true,
     primaryKey: true,
   },
-  name: DataTypes.STRING,
+  title: DataTypes.STRING,
 }, {
   timestamps: true,
   paranoid: true

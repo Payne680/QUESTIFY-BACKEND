@@ -2,7 +2,7 @@ const StateRepository = require("./stateRepo");
 
 class StateService {
   constructor() {
-    this.StateRepo = new StateRepository(); 
+    this.StateRepo = new StateRepository();
   }
   async getAllStates() {
     const allStates = await this.StateRepo.getAllState();
@@ -14,18 +14,9 @@ class StateService {
     return oneStates;
   }
 
-  async addState(name) {
-    try {
-
-      const newState = await this.StateRepo.createState({
-        name
-      })
-      return newState;
-      
-    }
-    catch(err) {
-      throw new Error("COULD_NOT_REGISTER_State");
-    }
+  async addState(title) {
+    console.log(title, 1);
+    return this.StateRepo.createState({ title });
   }
 
   async editOneState(StateToEdit, id) {
@@ -47,8 +38,6 @@ class StateService {
       throw new Error("COULD_NOT_DELETE_State");
     }
   }
-
-
 }
 
 module.exports = StateService;

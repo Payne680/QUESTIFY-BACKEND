@@ -30,6 +30,7 @@ class UserService {
     }
   }
 
+
   async getOneUser(id) {
     const oneUsers = await this.userRepo.getUserById(id);
     return oneUsers;
@@ -38,14 +39,14 @@ class UserService {
   async addUser(name, emailAddress, password ) {
     try {
       const hash = await bcrypt.hash(password, +process.env.SALT_ROUNDS)
-      const user = await this.userRepo.createUser({
+
+      const newUser = await this.userRepo.createUser({
         name,
         emailAddress,
         password: hash
       })
+      return newUser;
       
-      const token = signToken({ user_id: user.id });
-      return {token, user}   
     }
     catch(err) {
       throw new Error("COULD_NOT_REGISTER_USER");

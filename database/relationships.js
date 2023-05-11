@@ -5,7 +5,6 @@ const State = require("../modules/stateModule/state");
 const Task = require("../modules/taskModule/task");
 const User = require("../modules/user/users");
 function relate() {
-
   sequelize.sync();
 
   User.hasMany(Task);
@@ -14,16 +13,14 @@ function relate() {
   Project.hasMany(Notification);
   Notification.belongsTo(Project);
 
-  Task.hasMany(State);
-  State.belongsTo(Task);
+  State.hasMany(Task);
+  Task.belongsTo(State);
 
   Project.hasMany(Task);
   Task.belongsTo(Project);
 
   User.belongsToMany(Project, { through: "user_project" });
   Project.belongsToMany(User, { through: "user_project" });
-
-  
 
   sequelize.sync();
 }

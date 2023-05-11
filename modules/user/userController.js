@@ -45,7 +45,7 @@ class UserController {
       .catch((err) => res.status(500).send(err));
   }
 
-  getCurrentUser (req, res) {
+  getCurrentUser(req, res) {
     return res.send(req.user);
   }
 

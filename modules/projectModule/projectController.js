@@ -1,5 +1,7 @@
 const NotifyService = require("../notifModule/notifyService");
 const sendEmail = require("../services/emailService/sendEmail");
+const NotifyService = require("../notifModule/notifyService");
+const sendEmail = require("../services/emailService/sendEmail");
 const ProjectService = require("./projectService");
 
 class ProjectController {
@@ -22,8 +24,8 @@ class ProjectController {
       .catch((err) => res.status(500).send(err));
   }
 
-  async createOneProject(req, res) {
-    const { project: title, members } = req.body;
+  async async createOneProject(req, res) {
+    const { project: project: title, members, members } = req.body;
 
     if (!title) {
       return res.status(406).send({ message: "Missing Project Info" });
