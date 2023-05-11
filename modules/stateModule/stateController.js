@@ -59,8 +59,8 @@ class StateController {
       let columns = { ...el, id: el.db_id };
       if (el.db_id === null) {
         columns = await this.stateService.addState(el.title);
-        console.log(el.title);
         columns.save();
+        console.log(el.title);
         columns = columns.toJSON();
       }
 
@@ -75,12 +75,10 @@ class StateController {
   }
 
   async patchOneState(req, res) {
-      this.stateService
+    this.stateService
       .editOneState(req.body, req.params.id)
       .then((updatedState) => res.status(202).send(updatedState))
       .catch((err) => res.status(401).send(err));
-
-
   }
 
   deleteOneState(req, res) {
@@ -88,6 +86,7 @@ class StateController {
       .deleteOneState(+req.params.id)
       .then(() => res.sendStatus(202))
       .catch((err) => res.status(500).send(err));
+      console.log(+req.params.id)
   }
 }
 
