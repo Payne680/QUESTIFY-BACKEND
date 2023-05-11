@@ -19,11 +19,11 @@ class UserService {
       const user = await this.userRepo.getUserByEmail(emailAddress);
       const loginInfo = user && (await bcrypt.compare(password, user.password));
       if (loginInfo) {
-        const token = signToken({ emailAddress: user.emailAddress });
+        const token = signToken({ user_id: user.id });
         return token;
       }
       if (!loginInfo) {
-        return "Email or Password incorrect";
+        throw new Error("EMAIL OR PASSWORD INCORRECT");
       }
     } catch (err) {
       throw new Error("COULD_NOT_LOGIN_USER");
@@ -44,7 +44,7 @@ class UserService {
         password: hash
       })
       
-      const token = signToken({ emailAddress: user.emailAddress });
+      const token = signToken({ user_id: user.id });
       return {token, user}   
     }
     catch(err) {

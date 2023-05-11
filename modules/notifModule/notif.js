@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, BOOLEAN } = require('sequelize');
 const sequelize = require('../../database');
 
 const Notification = sequelize.define('notification', {
@@ -14,7 +14,8 @@ const Notification = sequelize.define('notification', {
   inviteToken: {
     type: DataTypes.STRING,
     unique: true,
-  }
+  },
+  inviteConfirm: DataTypes.BOOLEAN
 },
   {
     paranoid: true,

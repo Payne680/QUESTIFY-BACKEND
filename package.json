@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "DEBUG=http,mail,express:*,questify-backend:* nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

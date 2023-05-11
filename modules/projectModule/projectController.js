@@ -37,6 +37,7 @@ class ProjectController {
       notifications.map( async (element) => {
         const url = `${process.env.BASE_URL}/confirmation/${element.inviteToken}`;
         await sendEmail(element.email, "Verify Token", url)
+        res.status(201).send({ message: "Email sent to your inbox, please verify"});
       })
       res.status(201).send(project);
     } catch (e) {

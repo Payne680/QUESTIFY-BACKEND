@@ -19,20 +19,18 @@ class UserController {
       .catch((err) => res.status(500).send(err));
   }
 
-  getCurrentUser(req, res) {
-    res.send(req.user);
-  }
 
   login(req, res) {
     const { emailAddress, password } = req.body;
+    console.log(req.body);
     if (!(emailAddress && password)) {
-      return res.status(406).send({ message: "Missing User Info" });
+      return res.status(401).send({ message: "Missing User Info" });
     }
 
     this.userService
       .login(emailAddress, password)
       .then((user) => res.status(201).send(user))
-      .catch((err) => res.status(500).send(`error is ${err}`));
+      .catch((err) => res.status(401).send(`error is ${err}`));
   }
 
   createOneUser(req, res) {
@@ -47,7 +45,7 @@ class UserController {
       .catch((err) => res.status(500).send(err));
   }
 
-  getCurrentUser(req, res) {
+  getCurrentUser (req, res) {
     return res.send(req.user);
   }
 
