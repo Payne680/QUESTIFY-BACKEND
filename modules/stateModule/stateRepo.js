@@ -22,7 +22,10 @@ class StateRepository {
   }
 
   dropState(id) {
-    return State.destroy({ where: { id } });
+    return State.destroy({
+      include: [{ model: Task }],
+      where: { id: id },
+    });
   }
 }
 

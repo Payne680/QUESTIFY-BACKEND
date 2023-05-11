@@ -74,11 +74,13 @@ class StateController {
     /*     }); */
   }
 
-  patchOneState(req, res) {
-    this.stateService
+  async patchOneState(req, res) {
+      this.stateService
       .editOneState(req.body, req.params.id)
       .then((updatedState) => res.status(202).send(updatedState))
       .catch((err) => res.status(401).send(err));
+
+
   }
 
   deleteOneState(req, res) {
