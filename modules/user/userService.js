@@ -45,7 +45,8 @@ class UserService {
         emailAddress,
         password: hash
       })
-      return newUser;
+      const token = signToken({ user_id: newUser.id });
+      return {newUser, token};
       
     }
     catch(err) {
