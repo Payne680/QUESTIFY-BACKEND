@@ -1,5 +1,6 @@
 
 const Project = require("../projectModule/project");
+const { verifyToken } = require("../services/jwt");
 const User = require("../user/users");
 const NotifyService = require("./notifyService");
 
@@ -20,19 +21,23 @@ class notifyController {
       .catch((err) => res.status(500).send(err));
   }
 
+  verifyInvite(req, res) {
+    this.NotifyService.verifyToken(req.query.token)
+      .then(data => res.send(data))
+      .catch(err => res.status(500).send(err));
+  }
+
+  confirmInvite(req, res) {
+    this.NotifyService.confirmToken(req.body.token)
+      .then(data => res.send(data))
+      .catch(err => res.status(500).send(err));
+  }
+
   async getNotificationDetails(req, res) {
     const { data } = await jwt.verify(req.params.token);
     this.NotifyService.getAllNotificationsDetail({ data })
-    .then((details) => res.status(201).send(details))
-    .catch((err) => res.status(500).send(err)); en
-    // try {
-    //   const { data } = await jwt.verify(req.params.token);
-    //   const user = await User.findOne({ where: { emailAddress: data.email } })
-    //   const project = await Project.findByPk(data.projectId)
-    //   res.send({ user, project })
-    // } catch (e) {
-    //   res.send('error');
-    // }
+      .then((details) => res.status(201).send(details))
+      .catch((err) => res.status(500).send(err));
   };
 
   addNotify(req, res) {

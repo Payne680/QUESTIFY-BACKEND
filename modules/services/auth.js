@@ -3,7 +3,8 @@ const User = require('../user/users');
 const { verifyToken } = require('./jwt');
 
 const authMiddleware = async (req, res, next) => {
-  const authorisation = req.get('authorization');
+  const authorisation = req.get('Authorization');
+  console.log(authorisation)
   const token = authorisation?.split(" ").pop();
   console.log(token)
   if (token) {
@@ -22,12 +23,12 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-// const authAdmin = async (req, res, next) => {
-//   if (req.user.is_admin) {
-//     next()
-//   } else {
-//     res.sendStatus(401);
-//   }
-// };
+const authAdmin = async (req, res, next) => {
+  if (req.user.is_admin) {
+    next()
+  } else {
+    res.sendStatus(401);
+  }
+};
 
-module.exports = { authMiddleware }
+module.exports = { authMiddleware, authAdmin }

@@ -1,13 +1,14 @@
 var express = require("express");
+const { authMiddleware } = require("../modules/services/auth");
 const StateController = require("../modules/stateModule/stateController");
 var router = express.Router();
 
 const stateController = new StateController();
 
 /* GET State listing. */
-router.get("/", stateController.getAllStates.bind(stateController));
-router.get("/:id", stateController.getOneState.bind(stateController));
-router.post("/", stateController.createOneState.bind(stateController));
-router.put("/:id", stateController.patchOneState.bind(stateController));
-router.delete("/:id", stateController.deleteOneState.bind(stateController));
+router.get("/", authMiddleware, stateController.getAllStates.bind(stateController));
+router.get("/:id", authMiddleware, stateController.getOneState.bind(stateController));
+router.post("/", authMiddleware, stateController.createOneState.bind(stateController));
+router.put("/:id", authMiddleware, stateController.patchOneState.bind(stateController));
+router.delete("/:id", authMiddleware, stateController.deleteOneState.bind(stateController));
 module.exports = router;

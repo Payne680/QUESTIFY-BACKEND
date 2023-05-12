@@ -1,8 +1,13 @@
+const ProjectRepository = require("../projectModule/projectRepo");
+const { verifyToken } = require("../services/jwt");
+const UserRepository = require("../user/userRepo");
 const notifyRepository = require("./notifyRepo");
 
 class NotifyService {
   constructor() {
     this.notifyRepo = new notifyRepository();
+    this.userRepo = new UserRepository();
+    this.projectRepo = new ProjectRepository();
   }
   async getAllNotifications() {
     const allNotifications = await this.notifyRepo.getAllNotification();
@@ -18,6 +23,25 @@ class NotifyService {
     return this.notifyRepo.getAllNotificationsDetail({ data })
   }
 
+  async verifyToken(token) {
+    const { data } = verifyToken(token);
+    const user = await this.userRepo.getUserByEmail(data.email);
+    const project = await this.projectRepo.getProjectById(data.projectId);
+    console.log(data)
+    return {
+      user,
+      project,
+      ...data
+    }
+  }
+
+  async confirmToken(token) {
+    const { data } = verifyToken(token);
+    const user = await this.userRepo.getUserByEmail(data.email);
+    const project = await this.projectRepo.getProjectById(data.projectId);
+    project.addUser(user);
+    return user;
+  }
 
   async addNotification(emails, projectId) {
     return this.notifyRepo.createNotification(emails, projectId);

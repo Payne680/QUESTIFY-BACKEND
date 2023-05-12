@@ -9,7 +9,6 @@ const Notification = sequelize.define('notification', {
   },
   email: {
     type: DataTypes.STRING,
-    unique: true,
   },
   inviteToken: {
     type: DataTypes.STRING,
