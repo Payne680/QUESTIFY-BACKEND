@@ -2,6 +2,7 @@ const Notification = require("./notif");
 const { signToken } = require("../services/jwt");
 const User = require("../user/users");
 const Project = require("../projectModule/project");
+const sendEmail = require("../services/emailService/sendEmail");
 
 class notifyRepository {
   getAllNotification() {
@@ -19,8 +20,12 @@ class notifyRepository {
   }
 
   async createNotification(emailArr, projectId) {
-    return await Notification.bulkCreate(emailArr.map(({ email }) => {
+    return await Notification.bulkCreate(emailArr.map( async ({ email }) => {
       const inviteToken = signToken({ email, projectId });
+      const project = findByPk(projectId)
+      const url = `${process.env.BASE_URL}/invite/${inviteToken}`
+
+      await sendEmail(email, `Invitation to workspace ${project.title}`, `You have been invited to work on the ${project.title} workspace. Please click the link below to accept the invitation <br> ${url}`)
       return { email, inviteToken };
     }));
   }
