@@ -35,8 +35,6 @@ class UserController {
 
   createOneUser(req, res) {
     const { name, emailAddress, password } = req.body;
-    console.log({ name, emailAddress, password })
-    console.log(name, emailAddress, password)
     if (!(name && emailAddress && password)) {
       return res.status(406).send({ message: "Missing User Info" });
     }

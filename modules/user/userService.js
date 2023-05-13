@@ -7,7 +7,7 @@ const { signToken } = require("../services/jwt");
 
 class UserService {
   constructor() {
-    this.userRepo = new UserRepository(); 
+    this.userRepo = new UserRepository();
   }
   async getAllUsers() {
     const allUsers = await this.userRepo.getAllUser();
@@ -36,7 +36,7 @@ class UserService {
     return oneUsers;
   }
 
-  async addUser(name, emailAddress, password ) {
+  async addUser(name, emailAddress, password) {
     try {
       const hash = await bcrypt.hash(password, +process.env.SALT_ROUNDS)
 
@@ -46,10 +46,10 @@ class UserService {
         password: hash
       })
       const token = signToken({ user_id: newUser.id });
-      return {newUser, token};
-      
+      return { newUser, token };
+
     }
-    catch(err) {
+    catch (err) {
       throw new Error("COULD_NOT_REGISTER_USER");
     }
   }
