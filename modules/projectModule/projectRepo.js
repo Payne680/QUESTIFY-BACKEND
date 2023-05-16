@@ -1,5 +1,5 @@
+const User = require("../user/users");
 const Project = require("./project");
-
 
 class ProjectRepository {
   getAllProject() {
@@ -21,8 +21,6 @@ class ProjectRepository {
   dropProject(id) {
     return Project.destroy({ where: { id } });
   }
-
-  
 }
 
 module.exports = ProjectRepository;
