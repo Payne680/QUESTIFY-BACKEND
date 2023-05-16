@@ -14,20 +14,26 @@ class notifyRepository {
   }
 
   async getAllNotificationsDetail({ data }) {
-    const user = await User.findOne({ where: { emailAddress: data.email } })
-    const project = await Project.findByPk(data.projectId)
-    return ({ user, project })
+    const user = await User.findOne({ where: { emailAddress: data.email } });
+    const project = await Project.findByPk(data.projectId);
+    return { user, project };
   }
 
   async createNotification(emailArr, projectId) {
-    return await Notification.bulkCreate(emailArr.map( async ({ email }) => {
-      const inviteToken = signToken({ email, projectId });
-      const project = Project.findByPk(projectId)
-      const url = `${process.env.BASE_URL}/invite/${inviteToken}`
+    return await Notification.bulkCreate(
+      emailArr.map(async ({ email }) => {
+        const inviteToken = signToken({ email, projectId });
+        const project = Project.findByPk(projectId);
+        const url = `${process.env.BASE_URL}/invite/${inviteToken}`;
 
-    sendEmail(email, `Invitation to workspace ${project.title}`, `You have been invited to work on the ${project.title} workspace. Please click the link below to accept the invitation <br> ${url}`)
-      return { email, inviteToken };
-    }));
+        sendEmail(
+          email,
+          `Invitation to workspace ${project.title}`,
+          `You have been invited to work on the ${project.title} workspace. Please click the link below to accept the invitation ${url}`
+        );
+        return { email, inviteToken };
+      })
+    );
   }
 
   editNotification(notify, id) {
