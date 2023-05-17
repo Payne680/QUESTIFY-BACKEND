@@ -1,3 +1,4 @@
+const Project = require("../projectModule/project");
 const Task = require("../taskModule/task");
 const State = require("./state");
 
