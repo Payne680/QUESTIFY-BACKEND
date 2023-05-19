@@ -24,7 +24,7 @@ class notifyRepository {
       emailArr.map(async ({ email }) => {
         const inviteToken = signToken({ email, projectId });
         const project = Project.findByPk(projectId);
-        const url = `${process.env.BASE_URL}/invite/${inviteToken}`;
+        const url = `https://questify-pearl.vercel.app/invite/${inviteToken}`;
 
         sendEmail(
           email,

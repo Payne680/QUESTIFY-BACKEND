@@ -6,7 +6,7 @@ var router = express.Router();
 const projectController = new ProjectController();
 
 /* GET project listing. */
-router.get("/", authMiddleware, projectController.getAllProjects.bind(projectController));
+router.get("/",  projectController.getAllProjects.bind(projectController));
 router.get("/:id", authMiddleware, projectController.getOneProject.bind(projectController));
 router.post("/", authMiddleware, projectController.createOneProject.bind(projectController));
 router.put("/:id", authMiddleware, projectController.patchOneProject.bind(projectController));
